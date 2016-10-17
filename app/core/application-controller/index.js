@@ -4,7 +4,13 @@
 
 import Core from './core.js';
 import dom from './dom';
+import errorsHandler from './errors.handler';
 
+// errors handler
+errorsHandler(Core.debug);
+
+// extensions
 Core.extend('dom', dom);
+
 
 export default Core;

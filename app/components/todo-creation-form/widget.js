@@ -17,9 +17,9 @@ const widget = (sandbox) => {
     sandbox.initializeTemplate(template);
     
     const createButton = sandbox.findOne(`.create-button`);
-    createButton.addEventListener('click', function () {
+    createButton.click( () => {
       console.log('created');
-    })
+    });
   }
 
   function destroy() {

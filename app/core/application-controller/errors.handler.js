@@ -6,14 +6,15 @@ import loggerService from 'helpers/logger.service';
 
 export default ((debug) => {
   if(debug) {
-    window.addEventListener('error', (err) => {
-      throw err;
-    });
+    window.onerror = (msg, url, line, col, error) => {
+      throw error;
+    };
   }
   else {
-    window.addEventListener('error', (err) => {
-      loggerService.log(2, `${err.message}\n${err.stack}`);
-    });
+    window.onerror = (msg, url, line, col, error) => {
+      loggerService.log(2, `${error.message}\n${error.stack}`);
+      return true;
+    };
   }
-})();
+});
 

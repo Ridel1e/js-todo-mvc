@@ -8,8 +8,12 @@ import InvalidArgumentsError from 'helpers/invalid-argument.error.js';
 const core = (() => {
   
   const moduleData = {};
+  const debug = true;
   
   return {
+    get debug() {
+      return debug;
+    },
     extend,
     register,
     start,
