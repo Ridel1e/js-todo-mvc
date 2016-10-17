@@ -4,11 +4,12 @@
 
 import Sandbox from 'core/sandbox';
 import InvalidArgumentsError from 'helpers/invalid-argument.error.js';
+import loggerService from 'helpers/logger.service.js';
 
 const core = (() => {
   
   const moduleData = {};
-  const debug = true;
+  const debug = false;
   
   return {
     get debug() {
@@ -35,8 +36,8 @@ const core = (() => {
       }
     }
     else {
-        throw new InvalidArgumentsError('register', 'first argument must be a "string", ' +
-          'second argument must be a "function"');
+      loggerService.log(2, 'register(): method got invalid arguments' +
+        'first argument must be a "string", second argument must be a "function")');
     }
   }
 
@@ -47,19 +48,20 @@ const core = (() => {
   function start(moduleName) {
 
     if(typeof moduleName !== 'string') {
-      throw new InvalidArgumentsError('start', 'argument must be a "string"');
+      loggerService.log(2, 'start(): method got invalid arguments' +
+        'argument must be a "string", ');
     }
 
-    moduleData[moduleName].instance = 
+    moduleData[moduleName].instance =
       moduleData[moduleName].creator(new Sandbox(this, moduleName));
-    
+
     const instance = moduleData[moduleName].instance;
-    
-    if(instance.init instanceof Function && instance.destroy instanceof Function) {
+
+    try {
       instance.init();
     }
-    else {
-        throw new Error('start(): module doesn\'t have "init" or "destroy" function ');
+    catch (e){
+      loggerService.log(2, `start(): ${e.message}`);
     }
   }
 
@@ -70,22 +72,18 @@ const core = (() => {
   function stop(moduleName) {
 
     if(typeof moduleName !== 'string') {
-      throw new InvalidArgumentsError('stop', 'argument must be a "string"');
+      loggerService.log(2, 'stop(): method got invalid arguments' +
+        'argument must be a "string", ');
     }
 
     const module = moduleData[moduleName];
 
-    if(module.instance instanceof Object) {
-      if(module.instance.destroy instanceof Function) {
-        moduleData[moduleName].instance.destroy();
-        moduleData[moduleName].instance = null;
-      }
-      else {
-        throw new Error('stop(): module does\'t have "destroy method"');
-      }
+    try {
+      module.instance.destroy();
+      module.instance = null;
     }
-    else {
-      throw new Error('stop(): module should be started');
+    catch (e) {
+      loggerService.log(2, `start(): ${e.message}`);
     }
   }
 
@@ -99,7 +97,7 @@ const core = (() => {
       this[extensionName] = extensionObject;
     }
     else {
-     throw new InvalidArgumentsError('extend', 'first argument must be a "string", ' +
+     loggerService.log(2, 'extend', 'first argument must be a "string", ' +
        'second argument must be an "Object"');
     }
   }

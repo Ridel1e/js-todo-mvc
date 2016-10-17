@@ -2,7 +2,7 @@
  * Created by ridel1e on 13/10/2016.
  */
 
-import DomElementDecorator from './dom-element.decorator';
+import DomElementDecorator from './dom-element.decorator.js';
 
 const DomManipulator = (() => {
 

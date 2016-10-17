@@ -6,8 +6,8 @@ import ApplicationController from 'core/application-controller';
 import todoFilterWidget from 'components/todo-filter';
 import todoCreationFormWidget from 'components/todo-creation-form';
 
-todoFilterWidget(ApplicationController);
 todoCreationFormWidget(ApplicationController);
+todoFilterWidget(ApplicationController);
 
 ApplicationController.startAll();
 

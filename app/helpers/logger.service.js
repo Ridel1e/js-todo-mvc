@@ -6,7 +6,7 @@ export default (() => {
   return {
     log
   };
-
+  
   function log(type, message) {
     switch (type) {
       case 1:

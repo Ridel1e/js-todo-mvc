@@ -2,7 +2,7 @@
  * Created by ridel1e on 13/10/2016.
  */
 
-import InvalidArgumentsError from './invalid-argument.error.js';
+import InvalidArgumentsError from './../invalid-argument.error.js';
 
 class DomElementDecorator {
 

@@ -29,7 +29,7 @@ class Sandbox {
       element.click(callback);
     }
     else {
-      throw new InvalidArgumentsError('click():', 'argument should be DOM Object')
+      throw new InvalidArgumentsError('click():', 'first argument should be a DOM Object')
     }
   };
 }
