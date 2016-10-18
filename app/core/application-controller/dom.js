@@ -3,6 +3,7 @@
  */
 
 import DomManipulator from 'helpers/dom/dom-manipulator';
+import loggerService from 'helpers/logger.service.js';
 
 const dom = (() => {
   return {

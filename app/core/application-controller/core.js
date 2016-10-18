@@ -20,7 +20,7 @@ const core = (() => {
     start,
     startAll,
     stop,
-    stopAll,
+    stopAll
   };
 
   /**
@@ -36,7 +36,7 @@ const core = (() => {
       }
     }
     else {
-      loggerService.log(2, 'register(): method got invalid arguments' +
+      throw new InvalidArgumentsError('register',
         'first argument must be a "string", second argument must be a "function")');
     }
   }
@@ -47,21 +47,20 @@ const core = (() => {
    */
   function start(moduleName) {
 
-    if(typeof moduleName !== 'string') {
-      loggerService.log(2, 'start(): method got invalid arguments' +
-        'argument must be a "string", ');
+    if(typeof moduleName === 'string') {
+
+      moduleData[moduleName].instance =
+        moduleData[moduleName].creator(new Sandbox(this, moduleName));
+
+      try {
+        moduleData[moduleName].instance.init();
+      }
+      catch (e) {
+        loggerService.log(2, `start(): module "${moduleName}" can't be started. ${e.message}`);
+      }
     }
-
-    moduleData[moduleName].instance =
-      moduleData[moduleName].creator(new Sandbox(this, moduleName));
-
-    const instance = moduleData[moduleName].instance;
-
-    try {
-      instance.init();
-    }
-    catch (e){
-      loggerService.log(2, `start(): ${e.message}`);
+    else {
+      throw new InvalidArgumentsError('start', 'argument must be a "string"');
     }
   }
 
@@ -71,19 +70,18 @@ const core = (() => {
    */
   function stop(moduleName) {
 
-    if(typeof moduleName !== 'string') {
-      loggerService.log(2, 'stop(): method got invalid arguments' +
-        'argument must be a "string", ');
+    if(typeof moduleName === 'string') {
+      const module = moduleData[moduleName];
+      try {
+        module.instance.destroy();
+        module.instance = null;
+      }
+      catch (e) {
+        loggerService.log(2, `stop(): module "${moduleName}" can't be stopped. ${e.message}`);
+      }
     }
-
-    const module = moduleData[moduleName];
-
-    try {
-      module.instance.destroy();
-      module.instance = null;
-    }
-    catch (e) {
-      loggerService.log(2, `start(): ${e.message}`);
+    else {
+      throw new InvalidArgumentsError('stop', 'argument must be a "string"');
     }
   }
 
@@ -97,7 +95,7 @@ const core = (() => {
       this[extensionName] = extensionObject;
     }
     else {
-     loggerService.log(2, 'extend', 'first argument must be a "string", ' +
+     throw new InvalidArgumentsError('extend', 'first argument must be a "string",' +
        'second argument must be an "Object"');
     }
   }
