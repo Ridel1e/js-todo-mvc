@@ -16,10 +16,22 @@ const widget = (sandbox) => {
   function init() {
     sandbox.initializeTemplate(template);
     
-    const createButton = sandbox.findOne(`.create-button`);
+    const createButton = sandbox.findOne(`.task-creation-form__create-button`);
+    const titleInput = sandbox.findOne(`.task-creation-form__title-input`);
+
     createButton.click( () => {
-      console.log('created');
+      createTask(sandbox.getValue(titleInput));
     });
+  }
+
+  function createTask(title) {
+    sandbox.notify({
+      type: 'SAVE_TASK',
+      payload: {
+        title,
+        completed: false
+      }
+    })
   }
 
   function destroy() {

@@ -4,13 +4,10 @@
 
 import Core from './core.js';
 import dom from './dom';
-import errorsHandler from './errors.handler';
-
-// errors handler
-errorsHandler(Core.debug);
+import state from './state';
 
 // extensions
 Core.extend('dom', dom);
-
+Core.extend('state', state);
 
 export default Core;

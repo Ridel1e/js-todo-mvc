@@ -152,6 +152,14 @@ class DomElementDecorator {
       throw new InvalidArgumentsError('findAll', 'argument must be a "string"')
     }
   }
+
+  /**
+   * Returns value if element is input
+   * @returns {*}
+   */
+  getValue() {
+    return this._element.value;
+  }
 }
 
 export default DomElementDecorator;

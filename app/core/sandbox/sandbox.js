@@ -23,6 +23,11 @@ class Sandbox {
     this.container.html(html);
   }
 
+  // element attributes
+  getValue(element) {
+    return element.getValue()
+  }
+
   // events
   click(element, callback) {
     if(element.click instanceof Function) {
@@ -32,6 +37,15 @@ class Sandbox {
       throw new InvalidArgumentsError('click():', 'first argument should be a DOM Object')
     }
   };
+
+  // state
+  notify(action) {
+    this.applicationController.state.notify(action);
+  }
+
+  listen(name, callback) {
+    this.applicationController.state.listen(name, callback);
+  }
 }
 
 

@@ -8,6 +8,8 @@ const WIDGET_NAME = 'todo-filter';
 
 const widget = (sandbox) => {
 
+  const componentState = {};
+
   return {
     init,
     destroy
